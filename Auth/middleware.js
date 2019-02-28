@@ -1,12 +1,11 @@
 const jwt = require('jsonwebtoken');
 
 //JWT Secret
-const secret = process.env.JWT_SECRET || 'my secret';
+const { secret } = require('../config/secret');
 
 module.exports = {
   restricted,
   checkRole,
-  generateToken,
 };
 
 //Restricts the route. Requiring user token.
@@ -32,26 +31,10 @@ function restricted(req, res, next) {
 //Checks the role. If the role is valid, user can access info.
 function checkRole(department) {
   return function(req, res, next) {
-    console.log(req.decodedJwt);
     if (req.decodedJwt.roles && req.decodedJwt.roles.includes(department)) {
       next();
     } else {
       res.status(403).json({ you: 'you have no power here!' });
     }
   };
-}
-
-//Generates a token for the user
-function generateToken(user) {
-  const payload = {
-    subject: user.id,
-    username: user.username,
-    roles: ['owner'],
-  };
-
-  const options = {
-    expiresIn: '1d',
-  };
-
-  return jwt.sign(payload, secret, options);
 }
