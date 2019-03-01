@@ -11,6 +11,7 @@ const Context = React.createContext();
 class Provider extends Component {
   state = {
     userInfo: [],
+    users: [],
     isLoggedIn: false,
     isNewUser: false,
   };

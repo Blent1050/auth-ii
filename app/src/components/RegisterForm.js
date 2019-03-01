@@ -17,6 +17,7 @@ function Form() {
   const [password, setPassword] = useState('');
   const [department, setDepartmentType] = useState('');
   const user = { username, password, department };
+  console.log(user);
 
   return (
     <Context.Consumer>
